@@ -12,28 +12,30 @@ const AddContact = () => {
         watsappRef = e.target.value;
     }
 
-    const formHandler = useCallback(
-        () => (event) => {
-            event.preventDefault();
-
-            const data = [{
-                name: nameRef.current?.value,
-                phone: phoneRef.current?.value,
-                type: typeRef.current?.value,
-                watsapp: watsappRef
-            }];            
-            if (localStorage.getItem('contactList') !== null) {
-                updateContact(data);
-            } else {
-                localStorage.setItem('contactList', JSON.stringify(data));
-            }
-            navigate('/');
-        },
-        []
-    );
+    const formHandler = useCallback(() => (event) => {
+        event.preventDefault();
+        const data = [{
+            name: nameRef.current?.value,
+            phone: phoneRef.current?.value,
+            type: typeRef.current?.value,
+            watsapp: watsappRef
+        }];
+        if (localStorage.getItem('contactList') !== null) {
+            updateContact(data);
+        } else {
+            localStorage.setItem('contactList', JSON.stringify(data));
+        }
+        navigate('/');
+    }, []);
 
     const updateContact = (data) => {
         let items = JSON.parse(localStorage.getItem('contactList'));
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].phone === data[0].phone) {
+                alert("This phone number already exists");
+                return false;
+            }
+        }
         items.push(data[0]);
         localStorage.setItem('contactList', JSON.stringify(items));
     }
