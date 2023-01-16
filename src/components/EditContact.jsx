@@ -15,9 +15,8 @@ const EditContact = () => {
         getEditData();
     }, []);
 
-    const handleRadio = (e) => {
-        console.log(e.target.value);
-        watsappRef = e.target.value;
+    const handleRadio = (e) => {     
+        setWatsapp(e.target.value);
     }
 
     const formHandler = (event) => {
@@ -26,7 +25,7 @@ const EditContact = () => {
             name: name,
             phone: phone,
             type: type,
-            watsapp: watsappRef,
+            watsapp: watsapp,
         }];
         updateContact(data);
         navigate('/');
@@ -56,6 +55,9 @@ const EditContact = () => {
             });
         }
     }
+
+
+    console.log(watsapp);
     return (
         <div className="ui main">
             <h2>Edit Contact</h2>
@@ -83,11 +85,9 @@ const EditContact = () => {
                         <option key={2} value="office">Office</option>
                     </select>
                 </div>
-                <div className="field">
-                    <label>Is Watsapp</label>
-                    <input type="radio" value="yes" name="watsapp" onChange={handleRadio} checked={ watsapp==="yes" ? true : false } /> Yes
-                    <input type="radio" value="no" name="watsapp" onChange={handleRadio} checked={ watsapp==="no" ? true : false } /> No
-                </div>
+                <input type="radio" value="yes" name="watsapp" checked={watsapp === "yes"} onChange={handleRadio} /> Yes
+                <input type="radio" value="no" name="watsapp" checked={watsapp === "no"} onChange={handleRadio} /> No
+                <br />
                 <button className="ui button blue">Update</button>
             </form>
         </div>
